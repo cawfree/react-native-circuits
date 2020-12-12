@@ -63,7 +63,7 @@ export type Terminal = {
 };
 
 export type ModuleProps = {
-  readonly style: ViewStyle | readonly ViewStyle[];
+  readonly style: ViewStyle;
   readonly terminals?: readonly Terminal[];
   readonly children?: ReactChildren;
 };

@@ -56,7 +56,7 @@ export default function Module({
   return (
     <View style={style} onLayout={onLayout}>
       {children}
-      <View style={StyleSheet.absoluteFill} pointerEvents="none">
+      <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
         {terminals.map(
           (
             { wireDirection, style: terminalStyle, wire }: Terminal,
