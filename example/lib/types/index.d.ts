@@ -33,11 +33,12 @@ export type CircuitContextValue = {
     point: Point,
   ) => void;
   readonly sensitivityList: SensitivityList;
+  readonly onTerminalsDestroyed: (terminalId: readonly string[]) => void;
 };
 
 export type SensitiveProps = {
   readonly sensitivityList?: SensitivityList;
-  readonly children: ReactChildren;
+  readonly children?: ReactChildren;
 };
 
 export type ActiveComponentProps = SensitiveProps & {
@@ -61,7 +62,7 @@ export type Terminal = {
 export type ModuleProps = {
   readonly style: ViewStyle | readonly ViewStyle[];
   readonly terminals?: readonly Terminal[];
-  readonly children: ReactChildren;
+  readonly children?: ReactChildren;
 };
 
 export type CircuitProviderProps = SensitiveProps & {

@@ -16,7 +16,7 @@ function Module({
   const terminals = React.useMemo(() => maybeTerminals || [], [
     maybeTerminals,
   ]);
-  const { onTerminalMoved, sensitivityList } = useCircuit();
+  const { onTerminalMoved, sensitivityList, onTerminalsDestroyed } = useCircuit();
   const moduleId = React.useMemo(nanoid, []);
   const getTerminalId = React.useCallback(
     (index: number) => {
@@ -24,6 +24,14 @@ function Module({
     },
     [moduleId]
   );
+  const moduleTerminals = React.useMemo(() => {
+    return terminals.map((_, i) => getTerminalId(i));
+  }, [moduleId, terminals, getTerminalId]);
+  const [lastTerminals, setLastTerminals] = React.useState([]);
+  React.useEffect(() => {
+    setLastTerminals(moduleTerminals);
+    return () => onTerminalsDestroyed(lastTerminals);
+  }, [onTerminalsDestroyed, setLastTerminals, moduleTerminals]);
   const onMeasureTerminalBounds = React.useCallback(
     (
       terminalId: string,
@@ -68,13 +76,10 @@ function Module({
                 }
                 style={terminalStyle}
                 sensitivityList={sensitivityList}
-              >
-                <React.Fragment />
-              </ActiveComponent>
+              />
             );
           }
         )}
-        {/* TODO: Terminals. */}
       </Animated.View>
     </Animated.View>
   );

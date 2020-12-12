@@ -55,9 +55,21 @@ function CircuitProvider({
       };
     });
   }, [setWireBuffer]);
+  const onTerminalsDestroyed = React.useCallback((terminalIds: readonly string[]) => {
+    setWireBuffer((currentWireBuffer: WireBuffer) => {
+      return Object.fromEntries(
+        Object.entries(currentWireBuffer).filter(([k]) => terminalIds.indexOf(k) < 0),
+      );
+    });
+  }, [setWireBuffer]);
   const value = React.useMemo(
-    () => ({ ...defaultValue, onTerminalMoved, sensitivityList }),
-    [defaultValue, onTerminalMoved, sensitivityList]
+    () => ({
+      ...defaultValue,
+      onTerminalMoved,
+      sensitivityList,
+      onTerminalsDestroyed,
+    }),
+    [defaultValue, onTerminalMoved, sensitivityList, onTerminalsDestroyed]
   );
   return (
     <CircuitContext.Provider value={value}>

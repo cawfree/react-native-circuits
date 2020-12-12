@@ -15,6 +15,11 @@ const defaultValue = Object.freeze({
     );
   },
   sensitivityList: [],
+  onTerminalsDestroyed: () => {
+    throw new Error(
+      "It looks like you've forgotten to wrap your <Module /> in a <Circuit />."
+    );
+  },
 }) as CircuitContextValue;
 
 export default React.createContext(defaultValue);

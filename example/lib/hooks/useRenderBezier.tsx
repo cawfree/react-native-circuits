@@ -6,7 +6,8 @@ import type { AggregatePoint, RenderWire } from "../types";
 import { bezier } from "../constants";
 import { WireDirection } from "../types/enums";
 
-export default function useRenderWire(pathProps: PathProps): RenderWire {
+export default function useRenderBezier(pathProps: PathProps): RenderWire {
+
   return React.useCallback(
     (points): JSX.Element => {
       if (points.length < 2) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Animated, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
+import {Animated, StyleSheet, useWindowDimensions} from 'react-native';
 
-import Circuit, {Module, WireDirection, useWire, useRenderWire} from '../lib';
+import Circuit, {Repeater, useWire, useRenderBezier} from '../lib';
 
 import NotGate from './NotGate';
 
@@ -11,11 +11,14 @@ const styles = StyleSheet.create({
 });
 
 export default function Section(): JSX.Element {
-  const renderWire = useRenderWire({
+  const renderBlackWire = useRenderBezier({
     stroke: "black",
-    strokeWidth: "0.4",
+    strokeWidth: "0.5",
   });
-  const wire = useWire({renderWire});
+  const renderRedWire = useRenderBezier({
+    stroke: "red",
+    strokeWidth: "0.5",
+  });
   const {width, height} = useWindowDimensions();
   const [progress] = React.useState(() => new Animated.Value(0));
   React.useEffect(() => {
@@ -24,28 +27,26 @@ export default function Section(): JSX.Element {
       duration: 5000,
       useNativeDriver: true,
     }).start();
-  }, [progress]);
+  }, [progress, Math.random()]);
+
+  const wire1 = useWire({renderWire: renderBlackWire});
+  const wire2 = useWire({renderWire: renderRedWire});
   return (
-    <Circuit style={StyleSheet.flatten([{ width, height }, styles.row])} sensitivityList={[progress]}>
-      <NotGate
+    <Circuit
+      style={StyleSheet.flatten([{ width, height }, styles.row])}
+      sensitivityList={[progress]}
+    >
+      <NotGate size={50} B={wire1} />
+      <Repeater
         style={{
-          transform: [
-            {translateY: Animated.multiply(Animated.subtract(1, progress), height)},
-          ],
+          marginLeft: Math.random() * 500,
+          marginTop: Math.random() * 500,
         }}
-        size={100}
-        B={wire}
+        input={[wire1]}
+        output={[wire2]}
       />
-      <View style={styles.flex} />
-      <NotGate
-        style={{
-          transform: [
-            {translateY: Animated.multiply(progress, height)},
-          ],
-        }}
-        size={50}
-        A={wire}
-      />
+      <NotGate size={50} A={wire2} style={{marginLeft: 100}}/>
+      <NotGate size={50} A={wire2} style={{marginTop: 100}}/>
     </Circuit>
   );
 }
