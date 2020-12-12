@@ -29,10 +29,8 @@ export default function useRenderBezier(pathProps: PathProps): useRenderBezierRe
         const {wireId: sourceWire} = source;
         const {wireId: sinkWire} = sink;
 
-        // Loop back.
-        if (sourceWire === sinkWire) {
-          return <Path {...pathProps} d={bezier(source.point, sink.point)} />;
-        }
+        // TODO: Loop back.
+        if (sourceWire === sinkWire) {}
       }
 
       return (
@@ -41,7 +39,7 @@ export default function useRenderBezier(pathProps: PathProps): useRenderBezierRe
             <Path
               {...pathProps}
               key={`k${i}`}
-              d={bezier(source.point, sink.point, 1)}
+              d={bezier(source.point, sink.point)}
             />
           ))}
         </>
