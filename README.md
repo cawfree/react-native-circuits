@@ -1,6 +1,8 @@
 # react-native-circuits
 Easily layout any component as a schematic using [**FlexBox**](https://reactnative.dev/docs/flexbox) in React Native.
 
+Supports Android, iOS, Web and Expo.
+
 ## Getting Started
 
 Using [**Yarn**](https://yarnpkg.com):

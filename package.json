@@ -7,13 +7,13 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "build": "npx tsc & cp src/types/index.d.ts dist/types/index.d.ts"
+    "build": "yarn && npx tsc && rm -rf node_modules"
   },
   "name": "react-native-circuits",
   "version": "0.1.0-alpha.0",
   "description": "⚛️ Real programmers use wires.",
-  "main": "dist",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/cawfree/react-native-circuits",
   "author": "Alex Thomas (@cawfree) <alex@myco.space>",
   "license": "MIT",

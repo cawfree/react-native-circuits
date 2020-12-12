@@ -39,6 +39,7 @@ export default function useRenderBezier(pathProps: PathProps): useRenderWireResu
             <Path
               {...pathProps}
               key={`k${i}`}
+              fill="none"
               d={bezier(source.point, sink.point)}
             />
           ))}

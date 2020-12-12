@@ -8,7 +8,7 @@ import Circuit, {
   Junction,
   Bulb,
   Parallel,
-} from "../lib";
+} from "react-native-circuits";
 
 import {NotGate} from './components';
 
