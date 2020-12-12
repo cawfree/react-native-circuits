@@ -1,10 +1,18 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
-import Svg from 'react-native-svg';
+import {View} from 'react-native';
 
 import {CircuitContext} from '../contexts';
+import {FitSvg} from '../components';
 import {useCircuit} from '../hooks';
-import type {CircuitProviderProps, Point, PointsBuffer, Wire, WireBuffer} from '../types';
+import type {
+  AggregateLayout,
+  CircuitProviderProps,
+  Point,
+  PointsBuffer,
+  SvgRenderMethod,
+  Wire,
+  WireBuffer,
+} from "../types";
 import {WireDirection} from '../types/enums';
 
 export default function CircuitProvider({
@@ -14,23 +22,6 @@ export default function CircuitProvider({
   const ref = React.useRef<View>();
   const defaultValue = useCircuit();
   const [wireBuffer, setWireBuffer] = React.useState<WireBuffer>({});
-  const [layout, setLayout] = React.useState(null);
-  const onMeasureLayout = React.useCallback(
-    (
-      x: number,
-      y: number,
-      width: number,
-      height: number,
-      pageX: number,
-      pageY: number
-    ) => {
-      setLayout({x, y, width, height, pageX, pageY});
-    },
-    [setLayout]
-  );
-  const onLayout = React.useCallback(() => {
-    ref.current.measure(onMeasureLayout);
-  }, [ref, onMeasureLayout]); /* hack */
   const onTerminalMoved = React.useCallback((
     terminalId: string,
     wire: Wire,
@@ -67,40 +58,24 @@ export default function CircuitProvider({
     }),
     [defaultValue, onTerminalMoved, onTerminalsDestroyed]
   );
+  const render = React.useCallback((layout: AggregateLayout): JSX.Element[] => {
+    return Object.entries(wireBuffer).map(
+      ([wireId, { renderWire, ...extras }], i) => (
+        <React.Fragment key={`k${i}`}>
+          {renderWire(
+            Object.entries(extras).map(([key, { point, ...extras }]) => ({
+              ...extras,
+              point: [point[0] - layout.pageX, point[1] - layout.pageY],
+              wireId,
+            }))
+          )}
+        </React.Fragment>
+      )
+    );
+  }, [wireBuffer]) as SvgRenderMethod;
   return (
     <CircuitContext.Provider value={value}>
-      <View style={style}>
-        <View
-          style={StyleSheet.absoluteFill}
-          pointerEvents="none"
-          onLayout={onLayout}
-          ref={ref}
-        >
-          {!!layout && (
-            <Svg
-              style={StyleSheet.absoluteFill}
-              width={layout.width}
-              height={layout.height}
-              viewBox={`0 0 ${layout.width} ${layout.height}`}
-            >
-              {Object.entries(wireBuffer).map(
-                ([wireId, {renderWire, ...extras}], i) => (
-                  <React.Fragment key={`k${i}`}>
-                    {renderWire(
-                     Object.entries(extras).map(([key, { point, ...extras }]) => ({
-                       ...extras,
-                       point: [point[0] - layout.pageX, point[1] - layout.pageY],
-                       wireId,
-                     }))
-                   )}
-                  </React.Fragment>
-                )
-              )}
-            </Svg>
-          )}
-        </View>
-        {children}
-      </View>
+      <FitSvg style={style} render={render}>{children}</FitSvg>
     </CircuitContext.Provider>
   );
 }

@@ -13,6 +13,15 @@ export type AggregatePoint = {
   readonly wireId: string;
 };
 
+export type AggregateLayout = {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly pageX: number;
+  readonly pageY: number;
+};
+
 export type RenderWire = (points: readonly AggregatePoint[]) => JSX.Element;
 
 export type useRenderBezierResult = {
@@ -71,4 +80,14 @@ export type PointsBuffer = {
 
 export type WireBuffer = {
   readonly [wireId: string]: PointsBuffer;
+};
+
+export type SvgRenderMethod = (
+  layout: AggregateLayout
+) => ReactChildren;
+
+export type FitSvgProps = {
+  readonly style?: ViewStyle;
+  readonly children: ReactChildren;
+  readonly render?: SvgRenderMethod;
 };
