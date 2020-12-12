@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   alignCenter: {alignItems: 'center', flexDirection: 'row'},
   center: {alignItems: 'center', justifyContent: 'center'},
   flex: {flex: 1},
+  row: {flexDirection: 'row'},
 });
 
 export default function Section(): JSX.Element {
@@ -24,11 +25,15 @@ export default function Section(): JSX.Element {
   const renderRedWire = useRenderBezier(redStroke);
   const renderGreenWire = useRenderBezier({stroke: "green", strokeWidth: "0.5"});
   const renderPurpleWire = useRenderBezier({stroke: "purple", strokeWidth: "0.5"});
+  const renderBlueWire = useRenderBezier({stroke: "blue", strokeWidth: "0.5"});
+  const renderLimeWire = useRenderBezier({stroke: "lime", strokeWidth: "0.5"});
 
   const a = useWire(renderBlackWire);
   const b = useWire(renderRedWire);
   const c = useWire(renderGreenWire);
   const d = useWire(renderPurpleWire);
+  const e = useWire(renderBlueWire);
+  const f = useWire(renderLimeWire);
 
   return (
     <ScrollView style={styles.flex} key={Math.random()}>
@@ -110,9 +115,26 @@ export default function Section(): JSX.Element {
             </Bulb>
           </View>
           <View style={styles.flex} />
-          <View style={styles.center}>
+          <View>
+            <NotGate size={50} Input={b} />
+            <NotGate size={50} Input={b} />
             <NotGate size={50} Input={b} />
           </View>
+        </View>
+      </Circuit>
+      <Circuit style={styles.row}>
+        <View>
+          <Junction Right={[a, b, c]}/>
+        </View>
+        <View style={styles.flex} />
+        <View>
+          <NotGate size={50} Input={a} Output={d} />
+          <NotGate size={50} Input={b} Output={e} />
+          <NotGate size={50} Input={c} Output={f} />
+        </View>
+        <View style={styles.flex} />
+        <View>
+          <Junction Left={[d, e, f]}/>
         </View>
       </Circuit>
     </ScrollView>
