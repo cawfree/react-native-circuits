@@ -1,1 +1,2 @@
-export {default as Element} from './Element';
+export {default as ActiveComponent} from './ActiveComponent';
+export {default as Module} from './Module';

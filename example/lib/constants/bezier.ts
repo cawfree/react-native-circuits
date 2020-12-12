@@ -1,7 +1,7 @@
-import type { NodePoint } from "../types";
+import type { Point } from "../types";
 
 // https://stackoverflow.com/a/45245042/1701465
-export default function drawCurve(start: NodePoint, end: NodePoint): string {
+export default function bezier(start: Point, end: Point): string {
   const [startX, startY] = start;
   const [endX, endY] = end;
 

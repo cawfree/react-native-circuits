@@ -1,56 +1,79 @@
-import type {ViewStyle, LayoutChangeEvent, Animated} from 'react-native';
+import type {Animated, ViewStyle} from 'react-native';
+import type {PathProps} from 'react-native-svg';
 
 import {WireDirection} from './enums';
 
-export type RenderWireNodes = (nodes: Nodes) => JSX.Element;
+export type Point = [x: number, y: number];
 
-export type Node = {
-  readonly nodeId: string;
-  readonly layout: LayoutChangeEvent;
+export type ReactChildren = JSX.Element | readonly JSX.Element[];
+
+export type SensitivityList = readonly Animated.Value[];
+
+export type AggregatePoint = {
   readonly wireDirection: WireDirection;
+  readonly point: Point;
 };
 
-export type Nodes = {
-  readonly [elementNodeId: string]: Node;
-};
-
-export type useWireResult = {
-  readonly wireId: string;
-  readonly renderWire: RenderWireNodes;
-};
+export type RenderWire = (points: readonly AggregatePoint[]) => JSX.Element;
 
 export type useWireParams = {
-  readonly renderWire: RenderWireNodes;
+  readonly renderWire: RenderWire;
 };
 
-export type WireConfig = Animated.ViewStyle & {
+export type Wire = {
+  readonly wireId: string;
+  readonly renderWire: RenderWire;
+};
+
+export type CircuitContextValue = {
+  readonly onTerminalMoved: (
+    terminalId: string,
+    wire: Wire,
+    wireDirection: WireDirection,
+    point: Point,
+  ) => void;
+  readonly sensitivityList: SensitivityList;
+};
+
+export type SensitiveProps = {
+  readonly sensitivityList?: SensitivityList;
+  readonly children: ReactChildren;
+};
+
+export type ActiveComponentProps = SensitiveProps & {
+  readonly style: Animated.ViewStyle;
+  readonly onMeasureBounds: (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    pageX: number,
+    pageY: number
+  ) => void;
+};
+
+export type Terminal = {
+  readonly wire: Wire;
+  readonly style: Animated.ViewStyle;
   readonly wireDirection: WireDirection;
 };
 
-export type Wire = readonly [useWireResult, WireConfig];
-export type Wires = readonly Wire[];
-
-export type CircuitsContextValue = {
-  readonly onElementBounds: (node: Node, wire: useWireResult) => void;
+export type ModuleProps = {
+  readonly style: ViewStyle | readonly ViewStyle[];
+  readonly terminals?: readonly Terminal[];
+  readonly children: ReactChildren;
 };
 
-export type WireRenderNode = {
-  readonly nodes: Nodes;
-  readonly renderWire: RenderWireNodes;
-};
-
-export type WireNodes = {
-  readonly [wireId: string]: WireRenderNode;
-};
-
-export type ElementProps = {
+export type CircuitProviderProps = SensitiveProps & {
   readonly style?: ViewStyle;
-  readonly wires: Wires;
-  readonly children: JSX.Element;
+  readonly children: ReactChildren;
 };
 
-export type CircuitsProviderProps = {
-  readonly children: JSX.Element | readonly JSX.Element[];
+export type PointsBuffer = {
+  readonly renderWire: RenderWire;
+  readonly [terminalId: string]: AggregatePoint;
 };
 
-export type NodePoint = [x: number, y: number];
+export type WireBuffer = {
+  readonly [wireId: string]: PointsBuffer;
+};

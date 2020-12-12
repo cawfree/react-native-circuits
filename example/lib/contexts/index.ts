@@ -1,1 +1,1 @@
-export {default as CircuitsContext} from './CircuitsContext';
+export {default as CircuitContext} from './CircuitContext';

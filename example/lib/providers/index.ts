@@ -1,1 +1,1 @@
-export {default as CircuitsProvider} from './CircuitsProvider';
+export {default as CircuitProvider} from './CircuitProvider';

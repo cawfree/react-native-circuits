@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {nanoid} from 'nanoid/non-secure';
 
-import {useWireParams, useWireResult} from '../types';
+import type {Wire, useWireParams} from '../types';
 
-export default function useWire({ renderWire }: useWireParams): useWireResult {
+export default function useWire({renderWire}: useWireParams): Wire {
   const wireId = React.useMemo(nanoid, []);
-  return React.useMemo(() => ({ wireId, renderWire }), [wireId, renderWire]);
+  return React.useMemo(() => ({wireId, renderWire}), [renderWire]);
 }
