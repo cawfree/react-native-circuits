@@ -1,16 +1,13 @@
 import * as React from 'react';
-import {View, Animated, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Svg from 'react-native-svg';
 
 import {CircuitContext} from '../contexts';
 import {useCircuit} from '../hooks';
-import type {AggregatePoint, CircuitProviderProps, Point, PointsBuffer, Wire, WireBuffer} from '../types';
+import type {CircuitProviderProps, Point, PointsBuffer, Wire, WireBuffer} from '../types';
 import {WireDirection} from '../types/enums';
 
-const AnimatedSvg = Animated.createAnimatedComponent(Svg);
-
 function CircuitProvider({
-  sensitivityList,
   style,
   children,
 }: CircuitProviderProps): JSX.Element {
@@ -66,17 +63,16 @@ function CircuitProvider({
     () => ({
       ...defaultValue,
       onTerminalMoved,
-      sensitivityList,
       onTerminalsDestroyed,
     }),
-    [defaultValue, onTerminalMoved, sensitivityList, onTerminalsDestroyed]
+    [defaultValue, onTerminalMoved, onTerminalsDestroyed]
   );
   return (
     <CircuitContext.Provider value={value}>
       <View style={style}>
         <View style={StyleSheet.absoluteFill} pointerEvents="none" onLayout={onLayout} ref={ref}>
           {!!layout && (
-            <AnimatedSvg
+            <Svg
               style={StyleSheet.absoluteFill}
               width={layout.width}
               height={layout.height}
@@ -94,7 +90,7 @@ function CircuitProvider({
                   </React.Fragment>
                 )
               )}
-            </AnimatedSvg>
+            </Svg>
           )}
         </View>
         {children}

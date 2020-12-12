@@ -1,4 +1,4 @@
-import type {Animated, ViewStyle} from 'react-native';
+import type {ViewStyle} from 'react-native';
 import type {PathProps} from 'react-native-svg';
 
 import {WireDirection} from './enums';
@@ -6,8 +6,6 @@ import {WireDirection} from './enums';
 export type Point = [x: number, y: number];
 
 export type ReactChildren = JSX.Element | readonly JSX.Element[];
-
-export type SensitivityList = readonly Animated.Value[];
 
 export type AggregatePoint = {
   readonly wireDirection: WireDirection;
@@ -32,17 +30,12 @@ export type CircuitContextValue = {
     wireDirection: WireDirection,
     point: Point,
   ) => void;
-  readonly sensitivityList: SensitivityList;
   readonly onTerminalsDestroyed: (terminalId: readonly string[]) => void;
 };
 
-export type SensitiveProps = {
-  readonly sensitivityList?: SensitivityList;
+export type ActiveComponentProps = {
+  readonly style: ViewStyle;
   readonly children?: ReactChildren;
-};
-
-export type ActiveComponentProps = SensitiveProps & {
-  readonly style: Animated.ViewStyle;
   readonly onMeasureBounds: (
     x: number,
     y: number,
@@ -55,7 +48,7 @@ export type ActiveComponentProps = SensitiveProps & {
 
 export type Terminal = {
   readonly wire: Wire;
-  readonly style: Animated.ViewStyle;
+  readonly style: ViewStyle;
   readonly wireDirection: WireDirection;
 };
 
@@ -65,7 +58,7 @@ export type ModuleProps = {
   readonly children?: ReactChildren;
 };
 
-export type CircuitProviderProps = SensitiveProps & {
+export type CircuitProviderProps = {
   readonly style?: ViewStyle;
   readonly children: ReactChildren;
 };

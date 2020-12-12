@@ -14,7 +14,6 @@ const defaultValue = Object.freeze({
       "It looks like you've forgotten to wrap your <Module /> in a <Circuit />."
     );
   },
-  sensitivityList: [],
   onTerminalsDestroyed: () => {
     throw new Error(
       "It looks like you've forgotten to wrap your <Module /> in a <Circuit />."

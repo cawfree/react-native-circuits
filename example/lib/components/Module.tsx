@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {nanoid} from 'nanoid/non-secure';
 
 import ActiveComponent from './ActiveComponent';
@@ -16,7 +16,7 @@ function Module({
   const terminals = React.useMemo(() => maybeTerminals || [], [
     maybeTerminals,
   ]);
-  const { onTerminalMoved, sensitivityList, onTerminalsDestroyed } = useCircuit();
+  const { onTerminalMoved, onTerminalsDestroyed } = useCircuit();
   const moduleId = React.useMemo(nanoid, []);
   const getTerminalId = React.useCallback(
     (index: number) => {
@@ -54,9 +54,9 @@ function Module({
   const onLayout = React.useCallback(() => {
   }, [moduleId]);
   return (
-    <Animated.View style={style} onLayout={onLayout}>
+    <View style={style} onLayout={onLayout}>
       {children}
-      <Animated.View style={StyleSheet.absoluteFill} pointerEvents="none">
+      <View style={StyleSheet.absoluteFill} pointerEvents="none">
         {terminals.map(
           (
             { wireDirection, style: terminalStyle, wire }: Terminal,
@@ -75,13 +75,12 @@ function Module({
                   )
                 }
                 style={terminalStyle}
-                sensitivityList={sensitivityList}
               />
             );
           }
         )}
-      </Animated.View>
-    </Animated.View>
+      </View>
+    </View>
   );
 }
 

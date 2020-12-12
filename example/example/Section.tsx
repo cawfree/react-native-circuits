@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Animated, StyleSheet, useWindowDimensions} from 'react-native';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 
 import Circuit, {Repeater, useWire, useRenderBezier} from '../lib';
 
@@ -20,27 +20,15 @@ export default function Section(): JSX.Element {
     strokeWidth: "0.5",
   });
   const {width, height} = useWindowDimensions();
-  const [progress] = React.useState(() => new Animated.Value(0));
-  React.useEffect(() => {
-    Animated.timing(progress, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true,
-    }).start();
-  }, [progress, Math.random()]);
-
   const wire1 = useWire({renderWire: renderBlackWire});
   const wire2 = useWire({renderWire: renderRedWire});
   return (
-    <Circuit
-      style={StyleSheet.flatten([{ width, height }, styles.row])}
-      sensitivityList={[progress]}
-    >
+    <Circuit style={StyleSheet.flatten([{ width, height }, styles.row])}>
       <NotGate size={50} B={wire1} />
       <Repeater
         style={{
-          marginLeft: Math.random() * 500,
-          marginTop: Math.random() * 500,
+          marginLeft: Math.random() * 400,
+          marginTop: Math.random() * 100,
         }}
         input={[wire1]}
         output={[wire2]}

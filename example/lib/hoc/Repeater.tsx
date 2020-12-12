@@ -4,7 +4,7 @@ import type {ViewStyle} from 'react-native';
 
 import {Module} from '../components';
 import {WireDirection} from '../types/enums';
-import {Wire} from '../types';
+import {Terminal, Wire} from '../types';
 
 export type RepeaterProps = {
 };
@@ -18,7 +18,7 @@ function Repeater({
   readonly input: readonly Wire[];
   readonly output: readonly Wire[];
 }): JSX.Element {
-  const terminals = React.useMemo(() => {
+  const terminals = React.useMemo((): readonly Terminal[] => {
     return [
       ...input.map((e) => {
         return {
@@ -40,14 +40,11 @@ function Repeater({
           },
         };
       }),
-    ];
+    ] as readonly Terminal[];
   }, [input, output]);
   return (
     <Module
-      style={StyleSheet.flatten([
-        style,
-        {width: 0, height: 0}
-      ])}
+      style={StyleSheet.flatten([style, { width: 0, height: 0 }])}
       terminals={terminals}
     />
   );
