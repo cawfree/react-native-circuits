@@ -1,12 +1,15 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
-import {StyleSheet} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 
 import type {Nodes} from '../types';
 import nodesToPoints from './nodesToPoints';
 import findCenterPoint from './findCenterPoint';
 import drawCurve from './drawCurve';
-import { WireDirection } from '../types/enums';
+import {WireDirection} from '../types/enums';
+
+const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
@@ -35,12 +38,12 @@ export default function renderWire(nodes: Nodes): JSX.Element {
 
   const [sourcePoint] = nodesToPoints([source]);
   return (
-    <Svg style={styles.flex}>
+    <AnimatedSvg style={styles.flex}>
       {sinks.map((sink, i) => {
         const [sinkPoint] = nodesToPoints([sink]);
         const d = drawCurve(sourcePoint, sinkPoint);
-        return <Path key={`k${i}`} stroke="red" strokeWidth="2" d={d} fill="none" />;
+        return <AnimatedPath key={`k${i}`} stroke="red" strokeWidth="2" d={d} fill="none" />;
       })}
-    </Svg>
+    </AnimatedSvg>
   );
 }

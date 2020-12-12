@@ -19,7 +19,7 @@ export default function Element({
   return (
     <Animated.View style={style}>
       {children}
-      <View style={StyleSheet.absoluteFill} pointerEvents="none">
+      <View key={JSON.stringify(style)} style={StyleSheet.absoluteFill} pointerEvents="none">
         {wires.map(([wire, nodeStyle]: Wire, index: number) => {
           const { wireDirection } = nodeStyle;
           const nodeId = toElementNodeId(index);
@@ -27,9 +27,7 @@ export default function Element({
             <Animated.View
               key={nodeId}
               style={nodeStyle}
-              onLayout={(layout) =>
-                onElementBounds({ nodeId, wireDirection, layout }, wire)
-              }
+              onLayout={(layout) => onElementBounds({ nodeId, wireDirection, layout }, wire)}
             />
           );
         })}

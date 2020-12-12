@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 
 import {CircuitsContext} from '../contexts';
 import {useCircuits} from '../hooks';
@@ -17,6 +17,9 @@ const defaultState = Object.freeze({}) as WireNodes;
 export default function CircuitsProvider({
   children,
 }: CircuitsProviderProps): JSX.Element {
+  // TODO: Define by parent.
+  // TODO: Stipple.
+  const progress = React.useMemo(() => new Animated.Value(0), []);
   const defaultValue = useCircuits();
   const [wireNodes, setWireNodes] = React.useState<WireNodes>(
     defaultState,
@@ -61,11 +64,11 @@ export default function CircuitsProvider({
   }), [defaultValue, onElementBounds]);
   return (
     <CircuitsContext.Provider value={value}>
-      <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+      <Animated.View style={StyleSheet.absoluteFill} pointerEvents="box-none">
         {Object.entries(wireNodes).map(([k, { renderWire, nodes }]) => (
           <React.Fragment key={`k${k}`}>{renderWire(nodes)}</React.Fragment>
         ))}
-      </View>
+      </Animated.View>
       {children}
     </CircuitsContext.Provider>
   );
