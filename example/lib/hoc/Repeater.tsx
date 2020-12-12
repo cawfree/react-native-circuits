@@ -1,26 +1,25 @@
-import * as React from 'react';
-import {StyleSheet} from 'react-native';
-import type {ViewStyle} from 'react-native';
+import * as React from "react";
+import { StyleSheet } from "react-native";
+import type { ViewStyle } from "react-native";
 
-import {Module} from '../components';
-import {WireDirection} from '../types/enums';
-import {Terminal, Wire} from '../types';
+import { Module } from "../components";
+import { WireDirection } from "../types/enums";
+import { Terminal, Wire } from "../types";
 
-export type RepeaterProps = {
-};
+export type RepeaterProps = {};
 
 function Repeater({
   style,
-  input,
-  output,
-} : {
+  Inputs,
+  Outputs,
+}: {
   readonly style?: ViewStyle;
-  readonly input: readonly Wire[];
-  readonly output: readonly Wire[];
+  readonly Inputs: readonly Wire[];
+  readonly Outputs: readonly Wire[];
 }): JSX.Element {
   const terminals = React.useMemo((): readonly Terminal[] => {
     return [
-      ...input.map((e) => {
+      ...Inputs.map((e) => {
         return {
           wire: e,
           wireDirection: WireDirection.SINK,
@@ -30,7 +29,7 @@ function Repeater({
           },
         };
       }),
-      ...output.map((e) => {
+      ...Outputs.map((e) => {
         return {
           wire: e,
           wireDirection: WireDirection.SOURCE,
@@ -41,7 +40,7 @@ function Repeater({
         };
       }),
     ] as readonly Terminal[];
-  }, [input, output]);
+  }, [Inputs, Outputs]);
   return (
     <Module
       style={StyleSheet.flatten([style, { width: 0, height: 0 }])}

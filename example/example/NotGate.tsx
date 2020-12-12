@@ -1,25 +1,25 @@
 import * as React from 'react';
-import {Animated, Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import type {ViewStyle} from 'react-native';
 
 import {Module, WireDirection} from '../lib';
-import type {Wire} from '../lib/types';
+import type {Terminal, Wire} from '../lib/types';
 
 export default function NotGate({
   style,
-  A,
-  B,
+  Input,
+  Output,
   size,
 }: {
-  readonly style?: Animated.ViewStyle;
-  readonly A?: Wire;
-  readonly B?: Wire;
+  readonly style?: ViewStyle;
+  readonly Input?: Wire;
+  readonly Output?: Wire;
   readonly size: number;
 }): JSX.Element {
   const terminals = React.useMemo(
     () => [
       {
-        wire: A,
+        wire: Input,
         wireDirection: WireDirection.SINK,
         style: {
           position: "absolute",
@@ -27,7 +27,7 @@ export default function NotGate({
         },
       },
       {
-        wire: B,
+        wire: Output,
         wireDirection: WireDirection.SOURCE,
         style: {
           position: "absolute",
@@ -35,8 +35,8 @@ export default function NotGate({
           right:  0,
         },
       },
-    ],
-    [size, A, B]
+    ] as readonly Terminal[],
+    [size, Input, Output]
   );
   return (
     <Module style={[style, {width: size, height: size}]} terminals={terminals}>

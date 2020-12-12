@@ -83,15 +83,18 @@ export default function CircuitProvider({
               height={layout.height}
               viewBox={`0 0 ${layout.width} ${layout.height}`}
             >
-              {Object.values(wireBuffer).map(({ renderWire, ...extras }, i) =>
-                <React.Fragment key={`k${i}`}>
-                  {renderWire(
-                   Object.entries(extras).map(([key, { point, ...extras }]) => ({
-                     ...extras,
-                     point: [point[0] - layout.pageX, point[1] - layout.pageY],
-                   }))
-                 )}
-                </React.Fragment>
+              {Object.entries(wireBuffer).map(
+                ([wireId, {renderWire, ...extras}], i) => (
+                  <React.Fragment key={`k${i}`}>
+                    {renderWire(
+                     Object.entries(extras).map(([key, { point, ...extras }]) => ({
+                       ...extras,
+                       point: [point[0] - layout.pageX, point[1] - layout.pageY],
+                       wireId,
+                     }))
+                   )}
+                  </React.Fragment>
+                )
               )}
             </Svg>
           )}

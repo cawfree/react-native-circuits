@@ -10,17 +10,18 @@ export type ReactChildren = JSX.Element | readonly JSX.Element[];
 export type AggregatePoint = {
   readonly wireDirection: WireDirection;
   readonly point: Point;
+  readonly wireId: string;
 };
 
 export type RenderWire = (points: readonly AggregatePoint[]) => JSX.Element;
 
-export type useWireParams = {
+export type useRenderBezierResult = {
   readonly renderWire: RenderWire;
+  readonly pathProps: PathProps;
 };
 
-export type Wire = {
+export type Wire = useRenderBezierResult & {
   readonly wireId: string;
-  readonly renderWire: RenderWire;
 };
 
 export type CircuitContextValue = {
