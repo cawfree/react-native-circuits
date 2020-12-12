@@ -1,8 +1,14 @@
 import * as React from 'react';
-import {ScrollView, View, Image, StyleSheet} from 'react-native';
+import { Text, ScrollView, View, Image, StyleSheet } from "react-native";
 import {StrokeProps} from 'react-native-svg';
 
-import Circuit, {useWire, useRenderBezier, Junction, Bulb} from '../lib';
+import Circuit, {
+  useWire,
+  useRenderBezier,
+  Junction,
+  Bulb,
+  Parallel,
+} from "../lib";
 
 import NotGate from './NotGate';
 
@@ -123,9 +129,7 @@ export default function Section(): JSX.Element {
         </View>
       </Circuit>
       <Circuit style={styles.row}>
-        <View>
-          <Junction Right={[a, b, c]}/>
-        </View>
+        <View><Junction Right={[a, b, c]}/></View>
         <View style={styles.flex} />
         <View>
           <NotGate size={50} Input={a} Output={d} />
@@ -135,6 +139,19 @@ export default function Section(): JSX.Element {
         <View style={styles.flex} />
         <View>
           <Junction Left={[d, e, f]}/>
+        </View>
+      </Circuit>
+      <Circuit style={StyleSheet.flatten([styles.alignCenter, {padding: 10}])}>
+        <View>
+          <Junction Right={[a]}/>
+        </View>
+        <View style={styles.flex} />
+          <Parallel Input={a} Output={b}>
+            <Text style={{paddingVertical: 15, paddingHorizontal: 60}}>react-native-circuits</Text>
+          </Parallel>
+        <View style={styles.flex} />
+        <View>
+          <Junction Left={[b]}/>
         </View>
       </Circuit>
     </ScrollView>
