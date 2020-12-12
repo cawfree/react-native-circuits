@@ -15,10 +15,12 @@ export default function Section(): JSX.Element {
   const renderBlackWire = useRenderBezier({stroke: "black", strokeWidth: "0.5"});
   const renderRedWire = useRenderBezier({stroke: "red", strokeWidth: "0.5"});
   const renderGreenWire = useRenderBezier({stroke: "green", strokeWidth: "0.5"});
+  const renderPurpleWire = useRenderBezier({stroke: "purple", strokeWidth: "0.5"});
 
   const a = useWire(renderBlackWire);
   const b = useWire(renderRedWire);
   const c = useWire(renderGreenWire);
+  const d = useWire(renderPurpleWire);
 
   return (
     <ScrollView style={styles.flex} key={Math.random()}>
@@ -51,6 +53,28 @@ export default function Section(): JSX.Element {
         <NotGate size={50} Input={b} Output={c} style={{marginTop: 50}} />
           <View style={styles.flex} />
         <NotGate size={50} Input={a} />
+      </Circuit>
+      {/* Junction */}
+      <Circuit>
+        <View style={styles.alignCenter}>
+          <View>
+            <NotGate size={50} Output={a} />
+            <NotGate size={50} Output={b} />
+          </View>
+          <View style={styles.flex} />
+            <View style={styles.center}>
+              <Junction Left={[a, b]} Right={[c, d]}>
+                <NotGate size={50} />
+              </Junction>
+            </View>
+          <View style={styles.flex} />
+          <View>
+            <NotGate size={50} Input={c} />
+            <NotGate size={50} Input={d} />
+          </View>
+        </View>
+        
+
       </Circuit>
     </ScrollView>
   );
