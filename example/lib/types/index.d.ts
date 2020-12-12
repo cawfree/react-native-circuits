@@ -91,3 +91,12 @@ export type FitSvgProps = {
   readonly children: ReactChildren;
   readonly render?: SvgRenderMethod;
 };
+
+export type JunctionProps = {
+  readonly style?: ViewStyle;
+  readonly children?: ReactChildren;
+  readonly Top?: readonly Wire[];
+  readonly Left?: readonly Wire[];
+  readonly Bottom?: readonly Wire[];
+  readonly Right?: readonly Wire[];
+};
