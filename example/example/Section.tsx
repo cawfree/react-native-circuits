@@ -22,19 +22,20 @@ export default function Section(): JSX.Element {
   const {width, height} = useWindowDimensions();
   const wire1 = useWire({renderWire: renderBlackWire});
   const wire2 = useWire({renderWire: renderRedWire});
+
   return (
     <Circuit style={StyleSheet.flatten([{ width, height }, styles.row])}>
       <NotGate size={50} B={wire1} />
       <Repeater
         style={{
-          marginLeft: Math.random() * 400,
-          marginTop: Math.random() * 100,
+          marginLeft: Math.random() * 200,
+          marginTop: Math.random() * 200,
         }}
         input={[wire1]}
         output={[wire2]}
       />
-      <NotGate size={50} A={wire2} style={{marginLeft: 100}}/>
-      <NotGate size={50} A={wire2} style={{marginTop: 100}}/>
+      <NotGate size={50} A={wire2} style={{marginLeft: Math.random() * 100}}/>
+      <NotGate size={50} A={wire2} style={{marginTop: Math.random() * 100}}/>
     </Circuit>
   );
 }

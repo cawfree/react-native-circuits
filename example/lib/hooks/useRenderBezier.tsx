@@ -7,7 +7,6 @@ import { bezier } from "../constants";
 import { WireDirection } from "../types/enums";
 
 export default function useRenderBezier(pathProps: PathProps): RenderWire {
-
   return React.useCallback(
     (points): JSX.Element => {
       if (points.length < 2) {
@@ -22,6 +21,7 @@ export default function useRenderBezier(pathProps: PathProps): RenderWire {
       if (!maybeSource || sinks.length === 0) {
         return <React.Fragment />;
       }
+
       const source = maybeSource as AggregatePoint;
       return (
         <>

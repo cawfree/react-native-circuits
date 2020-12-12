@@ -8,7 +8,7 @@ import {useCircuit} from '../hooks';
 import type {ModuleProps, Terminal, Point, Wire} from '../types';
 import {WireDirection} from '../types/enums';
 
-function Module({
+export default function Module({
   style,
   children,
   terminals: maybeTerminals,
@@ -83,5 +83,3 @@ function Module({
     </View>
   );
 }
-
-export default React.memo(Module);

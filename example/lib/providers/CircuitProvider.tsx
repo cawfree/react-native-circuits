@@ -7,7 +7,7 @@ import {useCircuit} from '../hooks';
 import type {CircuitProviderProps, Point, PointsBuffer, Wire, WireBuffer} from '../types';
 import {WireDirection} from '../types/enums';
 
-function CircuitProvider({
+export default function CircuitProvider({
   style,
   children,
 }: CircuitProviderProps): JSX.Element {
@@ -70,7 +70,12 @@ function CircuitProvider({
   return (
     <CircuitContext.Provider value={value}>
       <View style={style}>
-        <View style={StyleSheet.absoluteFill} pointerEvents="none" onLayout={onLayout} ref={ref}>
+        <View
+          style={StyleSheet.absoluteFill}
+          pointerEvents="none"
+          onLayout={onLayout}
+          ref={ref}
+        >
           {!!layout && (
             <Svg
               style={StyleSheet.absoluteFill}
@@ -78,17 +83,15 @@ function CircuitProvider({
               height={layout.height}
               viewBox={`0 0 ${layout.width} ${layout.height}`}
             >
-              {Object.values(wireBuffer).map(
-                ({renderWire, ...extras}, i) => (
-                  <React.Fragment key={`k${i}`}>
-                    {renderWire(Object.values(extras).map(
-                      ({point, ...extras}) => ({
-                        ...extras,
-                        point: [point[0] - layout.pageX, point[1] - layout.pageY],
-                      }),
-                    ))}
-                  </React.Fragment>
-                )
+              {Object.values(wireBuffer).map(({ renderWire, ...extras }, i) =>
+                <React.Fragment key={`k${i}`}>
+                  {renderWire(
+                   Object.entries(extras).map(([key, { point, ...extras }]) => ({
+                     ...extras,
+                     point: [point[0] - layout.pageX, point[1] - layout.pageY],
+                   }))
+                 )}
+                </React.Fragment>
               )}
             </Svg>
           )}
@@ -98,5 +101,3 @@ function CircuitProvider({
     </CircuitContext.Provider>
   );
 }
-
-export default React.memo(CircuitProvider);

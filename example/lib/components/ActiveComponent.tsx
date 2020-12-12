@@ -3,7 +3,7 @@ import {View} from 'react-native';
 
 import type {ActiveComponentProps} from '../types';
 
-function ActiveComponent({
+export default function ActiveComponent({
   style,
   children,
   onMeasureBounds,
@@ -12,11 +12,12 @@ function ActiveComponent({
   const onLayout = React.useCallback(() => {
     ref.current.measure(onMeasureBounds);
   }, []);
+  React.useEffect(() => {
+    onLayout();
+  }, [style, children, onLayout]);
   return (
     <View ref={ref} style={style} onLayout={onLayout}>
       {children}
     </View>
   );
 }
-
-export default React.memo(ActiveComponent);
