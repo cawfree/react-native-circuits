@@ -7,6 +7,8 @@ export type Point = [x: number, y: number];
 
 export type ReactChildren = JSX.Element | readonly JSX.Element[];
 
+export type MaybeStyle = ViewStyle | readonly ViewStyle[] | undefined;
+
 export type AggregatePoint = {
   readonly wireDirection: WireDirection;
   readonly point: Point;
@@ -24,12 +26,12 @@ export type AggregateLayout = {
 
 export type RenderWire = (points: readonly AggregatePoint[]) => JSX.Element;
 
-export type useRenderBezierResult = {
+export type useRenderWireResult = {
   readonly renderWire: RenderWire;
   readonly pathProps: PathProps;
 };
 
-export type Wire = useRenderBezierResult & {
+export type Wire = useRenderWireResult & {
   readonly wireId: string;
 };
 
@@ -44,7 +46,7 @@ export type CircuitContextValue = {
 };
 
 export type ActiveComponentProps = {
-  readonly style: ViewStyle;
+  readonly style: MaybeStyle;
   readonly children?: ReactChildren;
   readonly onMeasureBounds: (
     x: number,
@@ -58,22 +60,23 @@ export type ActiveComponentProps = {
 
 export type Terminal = {
   readonly wire: Wire;
-  readonly style: ViewStyle;
+  readonly style: MaybeStyle;
   readonly wireDirection: WireDirection;
 };
 
 export type ModuleProps = {
-  readonly style: ViewStyle;
+  readonly style: MaybeStyle;
   readonly terminals?: readonly Terminal[];
   readonly children?: ReactChildren;
 };
 
 export type CircuitProviderProps = {
-  readonly style?: ViewStyle;
+  readonly style?: MaybeStyle;
   readonly children: ReactChildren;
 };
 
 export type PointsBuffer = {
+  // @ts-ignore
   readonly renderWire: RenderWire;
   readonly [terminalId: string]: AggregatePoint;
 };
@@ -87,13 +90,13 @@ export type SvgRenderMethod = (
 ) => ReactChildren;
 
 export type FitSvgProps = {
-  readonly style?: ViewStyle;
-  readonly children: ReactChildren;
+  readonly style?: MaybeStyle;
+  readonly children?: ReactChildren;
   readonly render?: SvgRenderMethod;
 };
 
 export type JunctionProps = {
-  readonly style?: ViewStyle;
+  readonly style?: MaybeStyle;
   readonly children?: ReactChildren;
   readonly Top?: readonly Wire[];
   readonly Left?: readonly Wire[];

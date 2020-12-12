@@ -22,8 +22,8 @@ export default function Parallel({
 } : {
   readonly style?: ViewStyle;
   readonly children?: ReactChildren;
-  readonly Input?: Wire;
-  readonly Output?: Wire;
+  readonly Input: Wire;
+  readonly Output: Wire;
 }): JSX.Element {
   const a = useWire(Input);
   const b = useWire(Input);

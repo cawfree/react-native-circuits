@@ -2,11 +2,11 @@ import * as React from "react";
 import { Path } from "react-native-svg";
 import type {PathProps} from "react-native-svg";
 
-import type { AggregatePoint, RenderWire, useRenderBezierResult } from "../types";
+import type { AggregatePoint, RenderWire, useRenderWireResult } from "../types";
 import { bezier } from "../constants";
 import { WireDirection } from "../types/enums";
 
-export default function useRenderBezier(pathProps: PathProps): useRenderBezierResult {
+export default function useRenderBezier(pathProps: PathProps): useRenderWireResult {
   const renderWire = React.useCallback(
     (points): JSX.Element => {
       if (points.length < 2) {

@@ -8,16 +8,19 @@ export default function ActiveComponent({
   children,
   onMeasureBounds,
 }: ActiveComponentProps): JSX.Element {
-  const ref = React.useRef(null);
+  const ref = React.useRef<View>();
   const onLayout = React.useCallback(() => {
-    ref.current.measure(onMeasureBounds);
-  }, []);
+    ref.current?.measure(onMeasureBounds);
+  }, [ref]);
   React.useEffect(() => {
     onLayout();
   }, [style, children, onLayout]);
   return (
-    <View ref={ref} style={style} onLayout={onLayout}>
-      {children}
-    </View>
+    <>
+      {/* @ts-ignore */}
+      <View ref={ref} style={style} onLayout={onLayout}>
+        {children}
+      </View>
+    </>
   );
 }

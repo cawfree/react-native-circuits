@@ -19,7 +19,6 @@ export default function CircuitProvider({
   style,
   children,
 }: CircuitProviderProps): JSX.Element {
-  const ref = React.useRef<View>();
   const defaultValue = useCircuit();
   const [wireBuffer, setWireBuffer] = React.useState<WireBuffer>({});
   const onTerminalMoved = React.useCallback((

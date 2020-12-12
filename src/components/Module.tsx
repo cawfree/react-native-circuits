@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ViewStyle, StyleProp} from 'react-native';
 import {nanoid} from 'nanoid/non-secure';
 
 import ActiveComponent from './ActiveComponent';
@@ -15,7 +15,7 @@ export default function Module({
 }: ModuleProps): JSX.Element {
   const terminals = React.useMemo(() => maybeTerminals || [], [
     maybeTerminals,
-  ]);
+  ]) as readonly Terminal[];
   const { onTerminalMoved, onTerminalsDestroyed } = useCircuit();
   const moduleId = React.useMemo(nanoid, []);
   const getTerminalId = React.useCallback(
@@ -26,8 +26,8 @@ export default function Module({
   );
   const moduleTerminals = React.useMemo(() => {
     return terminals.map((_, i) => getTerminalId(i));
-  }, [moduleId, terminals, getTerminalId]);
-  const [lastTerminals, setLastTerminals] = React.useState([]);
+  }, [moduleId, terminals, getTerminalId]) as readonly string[];
+  const [lastTerminals, setLastTerminals] = React.useState<readonly string[]>([]);
   React.useEffect(() => {
     setLastTerminals(moduleTerminals);
     return () => onTerminalsDestroyed(lastTerminals);
@@ -54,7 +54,7 @@ export default function Module({
   const onLayout = React.useCallback(() => {
   }, [moduleId]);
   return (
-    <View style={style} onLayout={onLayout}>
+    <View style={style as StyleProp<ViewStyle>} onLayout={onLayout}>
       {children}
       <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
         {terminals.map(
