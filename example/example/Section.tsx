@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {ScrollView, View, StyleSheet, useWindowDimensions} from 'react-native';
+import {ScrollView, View, StyleSheet} from 'react-native';
 
-import Circuit, {useWire, useRenderBezier, Repeater} from '../lib';
+import Circuit, {useWire, useRenderBezier, Junction} from '../lib';
 
 import NotGate from './NotGate';
 
@@ -44,7 +44,7 @@ export default function Section(): JSX.Element {
       <Circuit style={styles.alignCenter}>
         <NotGate size={50} Output={a} />
           <View style={styles.flex} />
-        <Repeater Inputs={[a]} Outputs={[b]} />
+        <Junction Left={[a]} Right={[b]} />
           <View style={styles.flex} />
         <NotGate size={50} Input={a} Output={c} style={{marginTop: -50}} />
           <View style={styles.flex} />

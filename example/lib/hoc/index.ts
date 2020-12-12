@@ -1,1 +1,1 @@
-export {default as Repeater} from './Repeater';
+export {default as Junction} from './Junction';
