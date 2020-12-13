@@ -14,6 +14,7 @@ export default function FitSvg({
   style,
   children,
   render,
+  extraPadding: maybeExtraPadding,
  }: FitSvgProps): JSX.Element {
   const ref = React.useRef<View>();
   const [layout, setLayout] = React.useState<AggregateLayout>();
@@ -33,7 +34,7 @@ export default function FitSvg({
   const onLayout = React.useCallback(() => {
     ref.current?.measure(onMeasureLayout);
   }, [ref, onMeasureLayout]); /* hack */
-  const extraPadding = 10;
+  const extraPadding = maybeExtraPadding || 0;
   return (
     <View style={StyleSheet.flatten(style as ViewStyle)}>
       {/* @ts-ignore */}
@@ -44,6 +45,7 @@ export default function FitSvg({
         ref={ref}>
         {!!layout && (
           <Svg
+            key={``}
             style={[
               styles.absolute,
               {

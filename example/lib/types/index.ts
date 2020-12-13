@@ -93,6 +93,7 @@ export type FitSvgProps = {
   readonly style?: MaybeStyle;
   readonly children?: ReactChildren;
   readonly render?: SvgRenderMethod;
+  readonly extraPadding?: number;
 };
 
 export type JunctionProps = {

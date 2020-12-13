@@ -20,9 +20,11 @@ export default function Bulb({
   const render = React.useCallback(({width, height}: AggregateLayout): ReactChildren => {
     return <Circle cx={width * 0.5} cy={height * 0.5} r={width * 0.5} {...(strokeProps || {})} fill="none" />;
   }, [strokeProps]);
+  const {strokeWidth: maybeStrokeWidth} = strokeProps;
+  const strokeWidth = Number.parseFloat(`${maybeStrokeWidth}`);
   return (
     <Junction Top={Top} Left={Left} Bottom={Bottom} Right={Right}>
-      <FitSvg style={style} render={render}>
+      <FitSvg style={style} render={render} extraPadding={strokeWidth}>
         {children}
       </FitSvg>
     </Junction>
