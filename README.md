@@ -3,7 +3,7 @@ Easily layout any component as a schematic using [**FlexBox**](https://reactnati
 
 Supports Android, iOS, Web and Expo.
 
-## Getting Started
+## 🚀 Getting Started
 
 Using [**Yarn**](https://yarnpkg.com):
 
@@ -12,7 +12,7 @@ yarn add react-native-svg
 yarn add react-native-circuits
 ```
 
-## Example
+## ✍️ Example
 
 To get started out, let's look at drawing a simple wire.
 
@@ -48,7 +48,7 @@ Notice that when we declare the `Top`, `Bottom` (or `Left` and `Right`) of a `Ju
 
 Check out the complete example [**here**](./example/App.tsx).
 
-## Types
+## 🦄 Types
 
 ```typescript
 import type {ViewStyle} from 'react-native';
@@ -159,5 +159,5 @@ export type JunctionProps = {
 
 ```
 
-## License
+## ✌️ License
 [**MIT**](./LICENSE)
