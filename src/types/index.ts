@@ -1,4 +1,4 @@
-import type {ViewStyle} from 'react-native';
+import type {ViewStyle, LayoutChangeEvent} from 'react-native';
 import type {PathProps} from 'react-native-svg';
 
 import {WireDirection} from './enums';
@@ -93,6 +93,8 @@ export type FitSvgProps = {
   readonly style?: MaybeStyle;
   readonly children?: ReactChildren;
   readonly render?: SvgRenderMethod;
+  readonly extraPadding?: number;
+  readonly onLayout?: (e: LayoutChangeEvent) => void;
 };
 
 export type JunctionProps = {

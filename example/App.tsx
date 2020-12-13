@@ -8,8 +8,8 @@ import Circuit, {
   Junction,
   Bulb,
   Parallel,
-} from "./lib";
-//"react-native-circuits";
+  Battery,
+} from "react-native-circuits";
 
 import {NotGate} from './components';
 
@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
   const renderLimeWire = useRenderBezier({stroke: "lime", strokeWidth: "0.5"});
   
   const prettyColor = "#F7B9A5";
-  const renderChunkyWire = useRenderBezier({stroke: prettyColor, strokeWidth: "3"});
+  const renderChunkyWire = useRenderBezier({stroke: prettyColor, strokeWidth: "8"});
 
   const a = useWire(renderBlackWire);
   const b = useWire(renderRedWire);
@@ -208,6 +208,14 @@ export default function App(): JSX.Element {
             <NotGate size={50} Input={b} />
           </View>
         </View>
+      </Circuit>
+      {/* battery */}
+      <Circuit style={styles.alignCenter}>
+        <NotGate size={50} Output={g} />
+        <View style={styles.flex} />
+        <Battery Input={[g]} Output={[h]} />
+        <View style={styles.flex} />
+        <NotGate size={50} Input={h} />
       </Circuit>
     </ScrollView>
   );

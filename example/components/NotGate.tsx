@@ -2,10 +2,8 @@ import * as React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import type {ViewStyle} from 'react-native';
 
-//import {Module, WireDirection} from "react-native-circuits";
-//import type {Wire, Terminal} from 'react-native-circuits/dist/types';
-import {Module, WireDirection} from "../lib";
-import type {Wire, Terminal} from '../lib/types';
+import {Module, WireDirection} from "react-native-circuits";
+import type {Wire, Terminal} from 'react-native-circuits/dist/types';
 
 export default function NotGate({
   style,
