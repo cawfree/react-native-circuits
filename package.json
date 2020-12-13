@@ -10,7 +10,7 @@
     "build": "yarn && npx tsc && rm -rf node_modules"
   },
   "name": "react-native-circuits",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "⚛️ Real programmers use wires.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
