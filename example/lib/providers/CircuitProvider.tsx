@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {LayoutChangeEvent} from 'react-native';
 
 import {CircuitContext} from '../contexts';
 import {FitSvg} from '../components';
@@ -72,9 +72,12 @@ export default function CircuitProvider({
       )
     );
   }, [wireBuffer]) as SvgRenderMethod;
+  const onLayout = React.useCallback((e: LayoutChangeEvent) => null, []);
   return (
     <CircuitContext.Provider value={value}>
-      <FitSvg style={style} render={render}>{children}</FitSvg>
+      <FitSvg onLayout={onLayout} style={style} render={render}>
+        {children}
+      </FitSvg>
     </CircuitContext.Provider>
   );
 }

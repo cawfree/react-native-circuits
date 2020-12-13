@@ -4,7 +4,6 @@ import type {ViewStyle} from 'react-native';
 
 //import {Module, WireDirection} from "react-native-circuits";
 //import type {Wire, Terminal} from 'react-native-circuits/dist/types';
-
 import {Module, WireDirection} from "../lib";
 import type {Wire, Terminal} from '../lib/types';
 

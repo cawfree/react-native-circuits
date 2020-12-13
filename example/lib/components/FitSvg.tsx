@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, ViewStyle} from 'react-native';
+import {View, Animated, StyleSheet, ViewStyle, Platform} from 'react-native';
 import Svg, {G} from 'react-native-svg';
 
 import {AggregateLayout, FitSvgProps} from '../types';
@@ -14,8 +14,10 @@ export default function FitSvg({
   style,
   children,
   render,
+  onLayout: onLayoutCallback,
   extraPadding: maybeExtraPadding,
  }: FitSvgProps): JSX.Element {
+  const opacity = React.useMemo(() => new Animated.Value(0), []);
   const ref = React.useRef<View>();
   const [layout, setLayout] = React.useState<AggregateLayout>();
   const onMeasureLayout = React.useCallback(
@@ -31,21 +33,29 @@ export default function FitSvg({
     },
     [setLayout]
   );
-  const onLayout = React.useCallback(() => {
+  const onLayout = React.useCallback((e) => {
     ref.current?.measure(onMeasureLayout);
+    // TODO: Make aggregate
+    !!onLayoutCallback && onLayoutCallback(e);
   }, [ref, onMeasureLayout]); /* hack */
   const extraPadding = maybeExtraPadding || 0;
+  React.useEffect(() => {
+    !!layout && Animated.timing(opacity, {
+      toValue: 1,
+      duration: 120,
+      useNativeDriver: Platform.OS !== 'web',
+    }).start();
+  }, [opacity, layout]);
   return (
     <View style={StyleSheet.flatten(style as ViewStyle)}>
       {/* @ts-ignore */}
-      <View
-        style={StyleSheet.absoluteFill}
+      <Animated.View
+        style={[StyleSheet.absoluteFill, {opacity}]}
         pointerEvents="none"
         onLayout={onLayout}
         ref={ref}>
         {!!layout && (
           <Svg
-            key={``}
             style={[
               styles.absolute,
               {
@@ -63,7 +73,7 @@ export default function FitSvg({
             </G>
           </Svg>
         )}
-      </View>
+      </Animated.View>
       {children}
     </View>
   );
