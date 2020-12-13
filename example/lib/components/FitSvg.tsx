@@ -40,17 +40,19 @@ export default function FitSvg({
   }, [ref, onMeasureLayout]); /* hack */
   const extraPadding = maybeExtraPadding || 0;
   React.useEffect(() => {
-    !!layout && Animated.timing(opacity, {
-      toValue: 1,
-      duration: 120,
-      useNativeDriver: Platform.OS !== 'web',
-    }).start();
+    !!layout && requestAnimationFrame(() => {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 250,
+        useNativeDriver: Platform.OS !== 'web',
+      }).start();
+    });
   }, [opacity, layout]);
   return (
-    <View style={StyleSheet.flatten(style as ViewStyle)}>
+    <Animated.View style={[{opacity}, style]}>
       {/* @ts-ignore */}
-      <Animated.View
-        style={[StyleSheet.absoluteFill, {opacity}]}
+      <View
+        style={StyleSheet.absoluteFill}
         pointerEvents="none"
         onLayout={onLayout}
         ref={ref}>
@@ -59,7 +61,6 @@ export default function FitSvg({
             style={[
               styles.absolute,
               {
-                borderWidth: 1,
                 top: -1 * extraPadding, 
                 left: -1 * extraPadding, 
               },
@@ -73,8 +74,8 @@ export default function FitSvg({
             </G>
           </Svg>
         )}
-      </Animated.View>
+      </View>
       {children}
-    </View>
+    </Animated.View>
   );
 }
