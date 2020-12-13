@@ -213,7 +213,7 @@ export default function App(): JSX.Element {
       <Circuit style={styles.alignCenter}>
         <NotGate size={50} Output={g} />
         <View style={styles.flex} />
-        <Battery Input={[g]} Output={[h]} />
+        <Battery Input={[g]} Output={[h]} color={prettyColor} />
         <View style={styles.flex} />
         <NotGate size={50} Input={h} />
       </Circuit>

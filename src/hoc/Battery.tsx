@@ -24,10 +24,12 @@ export default function Battery({
   style,
   Input: maybeInput,
   Output: maybeOutput,
+  color,
 }: {
   readonly style?: ViewStyle;
   readonly Input?: readonly Wire[];
   readonly Output?: readonly Wire[];
+  readonly color: string;
 }): JSX.Element {
   const Input = React.useMemo(() => {
     return Array.isArray(maybeInput) ? maybeInput : [];
@@ -36,12 +38,13 @@ export default function Battery({
     return Array.isArray(maybeOutput) ? maybeOutput : [];
   }, [maybeOutput]);
 
-  const inputStrokeWidth = React.useMemo(() => {
+  const inputStrokeWidth = React.useMemo((): number => {
     return Math.max(
-      ...Input.map(({ pathProps }: Wire): number => parseStrokeWidth(pathProps))
+      ...Input.map(({ pathProps }: Wire) => parseStrokeWidth(pathProps))
     );
   }, [Input]);
-  const size = inputStrokeWidth * 10;
+
+  const size = inputStrokeWidth * 11;
   return (
     <Module
       style={StyleSheet.flatten([style, {width: size, height: size}])}
@@ -63,6 +66,9 @@ export default function Battery({
       ] as readonly Terminal[]}
     >
       <SvgXml
+        style={{
+          transform: [{scale: 1.1}],
+        }}
         width={size}
         height={size}
         xml={`
@@ -110,27 +116,27 @@ export default function Battery({
      transform="matrix(0,-2.3529412,2.3339228,0,0.52083739,104.2353)">
     <path
        id="path8384"
-       style="fill:none;stroke:#000000;stroke-width:1mm;stroke-linecap:square"
+       style="fill:none;stroke:${color};stroke-width:1mm;stroke-linecap:square"
        inkscape:connector-curvature="0"
        d="M 23,26.6 V 40.7" />
     <path
        id="path8386"
-       style="fill:none;stroke:#000000;stroke-width:1mm;stroke-linecap:square"
+       style="fill:none;stroke:${color};stroke-width:1mm;stroke-linecap:square"
        inkscape:connector-curvature="0"
        d="M 23,1.7 V 15.9" />
     <path
        id="path8391"
-       style="fill:none;stroke:#000000;stroke-width:2mm"
+       style="fill:none;stroke:${color};stroke-width:2mm"
        inkscape:connector-curvature="0"
        d="M 37.2,24.8 H 8.9" />
     <path
        id="path9362"
-       style="fill:none;stroke:#000000;stroke-width:1mm"
+       style="fill:none;stroke:${color};stroke-width:1mm"
        inkscape:connector-curvature="0"
        d="M 44.3,15.9 H 1.8" />
     <path
        id="path9378"
-       style="fill:none;stroke:#000000;stroke-width:0.5mm"
+       style="fill:none;stroke:${color};stroke-width:0.5mm"
        inkscape:connector-curvature="0"
        d="M 32.8,7.5 H 44.3 M 38.6,1.7 v 11.6" />
   </g>
