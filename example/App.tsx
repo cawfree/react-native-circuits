@@ -8,7 +8,8 @@ import Circuit, {
   Junction,
   Bulb,
   Parallel,
-} from "react-native-circuits";
+} from "./lib";
+//"react-native-circuits";
 
 import {NotGate} from './components';
 
@@ -49,7 +50,7 @@ export default function App(): JSX.Element {
   const h = useWire(renderChunkyWire);
 
   return (
-    <ScrollView style={styles.flex} key={Math.random()}>
+    <ScrollView style={styles.flex}>
       {/* Simple */}
       <Circuit style={styles.alignCenter}>
         <NotGate size={50} Output={a} />
@@ -140,6 +141,7 @@ export default function App(): JSX.Element {
           </View>
         </View>
       </Circuit>
+      {/* Curvy */}
       <Circuit style={styles.row}>
         <View>
           <Junction Right={[a, b, c]} />
@@ -155,6 +157,7 @@ export default function App(): JSX.Element {
           <Junction Left={[d, e, f]} />
         </View>
       </Circuit>
+      {/* Parallel Text */}
       <Circuit
         style={StyleSheet.flatten([styles.alignCenter, { padding: 10 }])}
       >
@@ -178,6 +181,32 @@ export default function App(): JSX.Element {
         <View style={styles.flex} />
         <View>
           <Junction Left={[h]} />
+        </View>
+      </Circuit>
+      {/* Bulb Stress Test */}
+      <Circuit>
+        <View style={styles.alignCenter}>
+          <View style={styles.center}>
+            <NotGate size={50} Output={a} />
+          </View>
+          <View style={styles.flex} />
+          <View style={styles.center}>
+            <Bulb
+              style={{
+                width: 100,
+                height: 100,
+              }}
+              Left={[a]}
+              Right={[b]}
+              strokeProps={redStroke}
+            />
+          </View>
+          <View style={styles.flex} />
+          <View>
+            <NotGate size={50} Input={b} />
+            <NotGate size={50} Input={b} />
+            <NotGate size={50} Input={b} />
+          </View>
         </View>
       </Circuit>
     </ScrollView>
